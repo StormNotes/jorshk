@@ -14,12 +14,12 @@ import {
 } from "reactstrap";
 
 const data = [
-  { id: 1, trabajador_name: "Leo"},
-  { id: 2, trabajador_name: "jorge"},
-  { id: 3, trabajador_name: "emma"},
-  { id: 4, trabajador_name: "Pipi"},
-  { id: 5, trabajador_name: "Pupu"},
-  { id: 6, trabajador_name: "XD"},
+  { id: 1, trabajador_name: "Leo", horario: ""},
+  { id: 2, trabajador_name: "jorge" ,horario : ""},
+  { id: 3, trabajador_name: "emma" ,horario : ""},
+  { id: 4, trabajador_name: "Pipi" ,horario : ""},
+  { id: 5, trabajador_name: "Pupu" ,horario : ""},
+  { id: 6, trabajador_name: "XD" ,horario : ""},
 ];
 
 class App extends React.Component {
@@ -29,8 +29,8 @@ class App extends React.Component {
     modalInsertar: false,
     form: {
       id: "",
-      personaje: "",
-      anime: "",
+      Trabajadores: "",
+      horario: "",
     },
   };
 
@@ -60,8 +60,8 @@ class App extends React.Component {
     var arreglo = this.state.data;
     arreglo.map((registro) => {
       if (dato.id == registro.id) {
-        arreglo[contador].personaje = dato.personaje;
-        arreglo[contador].anime = dato.anime;
+        arreglo[contador].Trabajadores = dato.Trabajadores;
+        arreglo[contador].horario = dato.horario;
       }
       contador++;
     });
@@ -114,7 +114,7 @@ class App extends React.Component {
               <tr>
                 <th>ID</th>
                 <th>Trabajadores</th>
-                <th>Anime</th>
+                <th>Horario entrada</th>
                 <th>Acción</th>
               </tr>
             </thead>
@@ -124,7 +124,7 @@ class App extends React.Component {
                 <tr key={dato.id}>
                   <td>{dato.id}</td>
                   <td>{dato.trabajador_name}</td>
-                  <td>{dato.anime}</td>
+                  <td>{dato.horario}</td>
                   <td>
                     <Button
                       color="primary"
@@ -138,12 +138,12 @@ class App extends React.Component {
               ))}
             </tbody>
           </Table>
-         {/*  <Table>
+          <Table>
             <thead>
               <tr>
                 <th>ID</th>
                 <th>Trabajadores</th>
-                <th>Anime</th>
+                <th>Horario Salida</th>
                 <th>Acción</th>
               </tr>
             </thead>
@@ -153,7 +153,7 @@ class App extends React.Component {
                 <tr key={dato.id}>
                   <td>{dato.id}</td>
                   <td>{dato.trabajador_name}</td>
-                  <td>{dato.anime}</td>
+                  <td>{dato.horario}</td>
                   <td>
                     <Button
                       color="primary"
@@ -166,7 +166,7 @@ class App extends React.Component {
                 </tr>
               ))}
             </tbody>
-          </Table> */}
+          </Table>
         </Container>
 
         <Modal isOpen={this.state.modalActualizar}>
@@ -190,27 +190,27 @@ class App extends React.Component {
             
             <FormGroup>
               <label>
-                Personaje: 
+                Trabajadores: 
               </label>
               <input
                 className="form-control"
-                name="personaje"
+                name="Trabajadores"
                 type="text"
                 onChange={this.handleChange}
-                value={this.state.form.personaje}
+                value={this.state.form.Trabajadores}
               />
             </FormGroup>
             
             <FormGroup>
               <label>
-                Anime: 
+                horario: 
               </label>
               <input
                 className="form-control"
-                name="anime"
+                name="horario"
                 type="text"
                 onChange={this.handleChange}
-                value={this.state.form.anime}
+                value={this.state.form.horario}
               />
             </FormGroup>
           </ModalBody>
@@ -235,7 +235,7 @@ class App extends React.Component {
 
         <Modal isOpen={this.state.modalInsertar}>
           <ModalHeader>
-           <div><h3>Insertar Personaje</h3></div>
+           <div><h3>Insertar Trabajadores</h3></div>
           </ModalHeader>
 
           <ModalBody>
@@ -254,11 +254,11 @@ class App extends React.Component {
             
             <FormGroup>
               <label>
-                Personaje: 
+                Trabajadores: 
               </label>
               <input
                 className="form-control"
-                name="personaje"
+                name="Trabajadores"
                 type="text"
                 onChange={this.handleChange}
               />
@@ -266,11 +266,11 @@ class App extends React.Component {
             
             <FormGroup>
               <label>
-                Anime: 
+                horario: 
               </label>
               <input
                 className="form-control"
-                name="anime"
+                name="horario"
                 type="text"
                 onChange={this.handleChange}
               />
