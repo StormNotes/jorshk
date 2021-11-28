@@ -12,6 +12,7 @@ import {
   FormGroup,
   ModalFooter,
 } from "reactstrap";
+import TimePicker from 'react-time-picker';
 
 const data = [
   { id: 1, trabajador_name: "Leo", horario: ""},
@@ -268,11 +269,15 @@ class App extends React.Component {
               <label>
                 horario: 
               </label>
-              <input
+            {/*   <input
                 className="form-control"
                 name="horario"
                 type="text"
                 onChange={this.handleChange}
+              /> */}
+              <TimePicker
+               /*  onChange={onChange}
+                value={value} */
               />
             </FormGroup>
           </ModalBody>
