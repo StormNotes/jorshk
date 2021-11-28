@@ -14,12 +14,12 @@ import {
 } from "reactstrap";
 
 const data = [
-  { id: 1, personaje: "", anime: "" },
-  { id: 2, personaje: "", anime: "" },
-  { id: 3, personaje: "", anime: "" },
-  { id: 4, personaje: "", anime: "" },
-  { id: 5, personaje: "", anime: "" },
-  { id: 6, personaje: "", anime: "" },
+  { id: 1, trabajador_name: "Leo"},
+  { id: 2, trabajador_name: "jorge"},
+  { id: 3, trabajador_name: "emma"},
+  { id: 4, trabajador_name: "Pipi"},
+  { id: 5, trabajador_name: "Pupu"},
+  { id: 6, trabajador_name: "XD"},
 ];
 
 class App extends React.Component {
@@ -113,7 +113,7 @@ class App extends React.Component {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Personaje</th>
+                <th>Trabajadores</th>
                 <th>Anime</th>
                 <th>Acción</th>
               </tr>
@@ -123,7 +123,7 @@ class App extends React.Component {
               {this.state.data.map((dato) => (
                 <tr key={dato.id}>
                   <td>{dato.id}</td>
-                  <td>{dato.personaje}</td>
+                  <td>{dato.trabajador_name}</td>
                   <td>{dato.anime}</td>
                   <td>
                     <Button
@@ -138,11 +138,11 @@ class App extends React.Component {
               ))}
             </tbody>
           </Table>
-          <Table>
+         {/*  <Table>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Personaje</th>
+                <th>Trabajadores</th>
                 <th>Anime</th>
                 <th>Acción</th>
               </tr>
@@ -152,7 +152,7 @@ class App extends React.Component {
               {this.state.data.map((dato) => (
                 <tr key={dato.id}>
                   <td>{dato.id}</td>
-                  <td>{dato.personaje}</td>
+                  <td>{dato.trabajador_name}</td>
                   <td>{dato.anime}</td>
                   <td>
                     <Button
@@ -166,7 +166,7 @@ class App extends React.Component {
                 </tr>
               ))}
             </tbody>
-          </Table>
+          </Table> */}
         </Container>
 
         <Modal isOpen={this.state.modalActualizar}>
