@@ -14,12 +14,12 @@ import {
 } from "reactstrap";
 
 const data = [
-  { id: 1, trabajador_name: "Leo", horario: ""},
-  { id: 2, trabajador_name: "jorge" ,horario : ""},
-  { id: 3, trabajador_name: "emma" ,horario : ""},
-  { id: 4, trabajador_name: "Pipi" ,horario : ""},
-  { id: 5, trabajador_name: "Pupu" ,horario : ""},
-  { id: 6, trabajador_name: "XD" ,horario : ""},
+  { id: 1, trabajador_name: "Leo", horario: "00:00"},
+  { id: 2, trabajador_name: "jorge" ,horario : "00:00"},
+  { id: 3, trabajador_name: "emma" ,horario : "00:00"},
+  { id: 4, trabajador_name: "Pipi" ,horario : "00:00"},
+  { id: 5, trabajador_name: "Pupu" ,horario : "00:00"},
+  { id: 6, trabajador_name: "XD" ,horario : "00:00"},
 ];
 
 class App extends React.Component {
