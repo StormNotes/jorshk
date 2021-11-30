@@ -13,13 +13,20 @@ import {
   ModalFooter,
 } from "reactstrap";
 
+var mySql = require('mysql');
+const connec = mySql.createConnection({
+
+  host:"localhost",
+  database:"ejemplo_db",
+  user:"root",
+  password:""
+
+});
+
+
 const data = [
-  { id: 1, trabajador_name: "Leo", horario: "00:00"},
-  { id: 2, trabajador_name: "jorge" ,horario : "00:00"},
-  { id: 3, trabajador_name: "emma" ,horario : "00:00"},
-  { id: 4, trabajador_name: "Pipi" ,horario : "00:00"},
-  { id: 5, trabajador_name: "Pupu" ,horario : "00:00"},
-  { id: 6, trabajador_name: "XD" ,horario : "00:00"},
+  { id: 1, trabajador: "Leonardo", horario: "11:30" },
+  
 ];
 
 class App extends React.Component {
@@ -29,7 +36,7 @@ class App extends React.Component {
     modalInsertar: false,
     form: {
       id: "",
-      Trabajadores: "",
+      trabajador: "",
       horario: "",
     },
   };
@@ -60,7 +67,7 @@ class App extends React.Component {
     var arreglo = this.state.data;
     arreglo.map((registro) => {
       if (dato.id == registro.id) {
-        arreglo[contador].Trabajadores = dato.Trabajadores;
+        arreglo[contador].trabajador = dato.trabajador;
         arreglo[contador].horario = dato.horario;
       }
       contador++;
@@ -113,8 +120,8 @@ class App extends React.Component {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Trabajadores</th>
-                <th>Horario entrada</th>
+                <th>trabajador</th>
+                <th>horario</th>
                 <th>Acción</th>
               </tr>
             </thead>
@@ -123,7 +130,7 @@ class App extends React.Component {
               {this.state.data.map((dato) => (
                 <tr key={dato.id}>
                   <td>{dato.id}</td>
-                  <td>{dato.trabajador_name}</td>
+                  <td>{dato.trabajador}</td>
                   <td>{dato.horario}</td>
                   <td>
                     <Button
@@ -138,12 +145,12 @@ class App extends React.Component {
               ))}
             </tbody>
           </Table>
-          <Table>
+          {/*  <Table>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Trabajadores</th>
-                <th>Horario Salida</th>
+                <th>trabajador</th>
+                <th>horario</th>
                 <th>Acción</th>
               </tr>
             </thead>
@@ -152,7 +159,7 @@ class App extends React.Component {
               {this.state.data.map((dato) => (
                 <tr key={dato.id}>
                   <td>{dato.id}</td>
-                  <td>{dato.trabajador_name}</td>
+                  <td>{dato.trabajador}</td>
                   <td>{dato.horario}</td>
                   <td>
                     <Button
@@ -166,7 +173,7 @@ class App extends React.Component {
                 </tr>
               ))}
             </tbody>
-          </Table>
+          </Table> */}
         </Container>
 
         <Modal isOpen={this.state.modalActualizar}>
@@ -185,19 +192,21 @@ class App extends React.Component {
                 readOnly
                 type="text"
                 value={this.state.form.id}
+                required
               />
             </FormGroup>
             
             <FormGroup>
               <label>
-                Trabajadores: 
+                trabajador: 
               </label>
               <input
                 className="form-control"
-                name="Trabajadores"
+                name="trabajador"
                 type="text"
                 onChange={this.handleChange}
-                value={this.state.form.Trabajadores}
+                value={this.state.form.trabajador}
+                required
               />
             </FormGroup>
             
@@ -208,7 +217,7 @@ class App extends React.Component {
               <input
                 className="form-control"
                 name="horario"
-                type="text"
+                type="time"
                 onChange={this.handleChange}
                 value={this.state.form.horario}
               />
@@ -235,7 +244,7 @@ class App extends React.Component {
 
         <Modal isOpen={this.state.modalInsertar}>
           <ModalHeader>
-           <div><h3>Insertar Trabajadores</h3></div>
+           <div><h3>Insertar trabajador</h3></div>
           </ModalHeader>
 
           <ModalBody>
@@ -254,11 +263,11 @@ class App extends React.Component {
             
             <FormGroup>
               <label>
-                Trabajadores: 
+                trabajador: 
               </label>
               <input
                 className="form-control"
-                name="Trabajadores"
+                name="trabajador"
                 type="text"
                 onChange={this.handleChange}
               />
@@ -271,9 +280,8 @@ class App extends React.Component {
               <input
                 className="form-control"
                 name="horario"
-                type="text"
+                type="time"
                 onChange={this.handleChange}
-                placeholder="00:00"
               />
             </FormGroup>
           </ModalBody>

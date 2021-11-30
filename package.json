@@ -4,17 +4,17 @@
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.7.0",
-    "@mui/lab": "^5.0.0-alpha.57",
-    "@mui/material": "^5.2.1",
+    "@mui/lab": "^5.0.0-alpha.58",
+    "@mui/material": "^5.2.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "bootstrap": "^4.4.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "bootstrap": "^4.6.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-scripts": "3.4.1",
     "react-time-picker": "^4.4.4",
-    "reactstrap": "^8.4.1"
+    "reactstrap": "^8.10.1"
   },
   "scripts": {
     "start": "react-scripts start",
