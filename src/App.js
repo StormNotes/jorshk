@@ -27,7 +27,7 @@ class App extends React.Component {
     modalInsertar: false,
     form: {
       id: "",
-      trabajador: "",
+      name: "",
       horario_entrada: "",
       horario_salida: "",
     },
@@ -49,7 +49,8 @@ class App extends React.Component {
       entrada: this.state.form.horario_entrada,
       salida: this.state.form.horario_salida,
     }).then(()=>{
-      console.log('se enviaron los datos a la BD')
+      console.log('se enviaron los datos a la BD');
+      document.location.reload(true);
     })
   }
 
@@ -135,7 +136,7 @@ class App extends React.Component {
       alert('El campo trabajador debe no debe estar vacio.')
       this.state.form.trabajador = '';
     } else {
-      lista.unshift(valorNuevo);
+      lista.push(valorNuevo);
       this.agregarTrabajador();
       this.state.form.trabajador = '';
       this.setState({
