@@ -1,4 +1,7 @@
-import React from "react";
+import React, {
+  Component
+} from 'react';
+import axios from "axios";
 import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,24 +15,12 @@ import {
   FormGroup,
   ModalFooter,
 } from "reactstrap";
-
-var mySql = require('mysql');
-const connec = mySql.createConnection({
-
-  host:"localhost",
-  database:"ejemplo_db",
-  user:"root",
-  password:""
-
-});
-
-
 const data = [
-  { id: 1, trabajador: "Leonardo", horario: "11:30" },
-  
+
 ];
 
 class App extends React.Component {
+  
   state = {
     data: data,
     modalActualizar: false,
@@ -37,9 +28,28 @@ class App extends React.Component {
     form: {
       id: "",
       trabajador: "",
-      horario: "",
+      horario_entrada: "",
+      horario_salida: "",
     },
   };
+  
+  componentDidMount() {
+    axios.get("http://localhost:3001/getEmpleados").then((response) => {
+      console.log(response);
+      this.state.data = response.data
+    })
+  }
+
+  agregarTrabajador = () =>{
+    axios.post('http://localhost:3001/create',{
+      id: this.state.data.length,
+      name: this.state.form.trabajador,
+      entrada: this.state.form.horario_entrada,
+      salida: this.state.form.horario_salida,
+    }).then(()=>{
+      console.log('se enviaron los datos a la BD')
+    })
+  }
 
   mostrarModalActualizar = (dato) => {
     this.setState({
@@ -53,6 +63,7 @@ class App extends React.Component {
   };
 
   mostrarModalInsertar = () => {
+ 
     this.setState({
       modalInsertar: true,
     });
@@ -68,7 +79,8 @@ class App extends React.Component {
     arreglo.map((registro) => {
       if (dato.id == registro.id) {
         arreglo[contador].trabajador = dato.trabajador;
-        arreglo[contador].horario = dato.horario;
+        arreglo[contador].horario_entrada = dato.horario_entrada;
+        arreglo[contador].horario_salida = dato.horario_salida;
       }
       contador++;
     });
@@ -90,15 +102,31 @@ class App extends React.Component {
     }
   };
 
-  insertar= ()=>{
-    var valorNuevo= {...this.state.form};
-    valorNuevo.id=this.state.data.length+1;
-    var lista= this.state.data;
-    lista.push(valorNuevo);
-    this.setState({ modalInsertar: false, data: lista });
+  insertar = () => {
+    var valorNuevo = {
+      ...this.state.form
+    };
+    valorNuevo.id = this.state.data.length + 1;
+    var lista = this.state.data;
+    if (valorNuevo.trabajador === '') {
+      this.setState({
+        modalInsertar: false
+      });
+      alert('El campo trabajador debe no debe estar vacio.')
+      this.state.form.trabajador = '';
+    } else {
+      lista.unshift(valorNuevo);
+      this.agregarTrabajador();
+      this.state.form.trabajador = '';
+      this.setState({
+        modalInsertar: false,
+        data: lista
+      });
+    }
   }
 
   handleChange = (e) => {
+ 
     this.setState({
       form: {
         ...this.state.form,
@@ -120,8 +148,9 @@ class App extends React.Component {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>trabajador</th>
-                <th>horario</th>
+                <th>Empleado</th>
+                <th>Horario de entrada</th>
+                <th>Horario de salida</th>
                 <th>Acción</th>
               </tr>
             </thead>
@@ -131,7 +160,8 @@ class App extends React.Component {
                 <tr key={dato.id}>
                   <td>{dato.id}</td>
                   <td>{dato.trabajador}</td>
-                  <td>{dato.horario}</td>
+                  <td>{dato.horario_entrada}</td>
+                  <td>{dato.horario_salida}</td>
                   <td>
                     <Button
                       color="primary"
@@ -145,35 +175,6 @@ class App extends React.Component {
               ))}
             </tbody>
           </Table>
-          {/*  <Table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>trabajador</th>
-                <th>horario</th>
-                <th>Acción</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {this.state.data.map((dato) => (
-                <tr key={dato.id}>
-                  <td>{dato.id}</td>
-                  <td>{dato.trabajador}</td>
-                  <td>{dato.horario}</td>
-                  <td>
-                    <Button
-                      color="primary"
-                      onClick={() => this.mostrarModalActualizar(dato)}
-                    >
-                      Editar
-                    </Button>{" "}
-                    <Button color="danger" onClick={()=> this.eliminar(dato)}>Eliminar</Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table> */}
         </Container>
 
         <Modal isOpen={this.state.modalActualizar}>
@@ -212,14 +213,26 @@ class App extends React.Component {
             
             <FormGroup>
               <label>
-                horario: 
+                horario entrada: 
               </label>
               <input
                 className="form-control"
-                name="horario"
+                name="horario_entrada"
                 type="time"
                 onChange={this.handleChange}
-                value={this.state.form.horario}
+                value={this.state.form.horario_entrada}
+              />
+            </FormGroup>
+            <FormGroup>
+              <label>
+                horario salida: 
+              </label>
+              <input
+                className="form-control"
+                name="horario_salida"
+                type="time"
+                onChange={this.handleChange}
+                value={this.state.form.horario_salida}
               />
             </FormGroup>
           </ModalBody>
@@ -275,11 +288,22 @@ class App extends React.Component {
             
             <FormGroup>
               <label>
-                horario: 
+                Horario entrada: 
               </label>
               <input
                 className="form-control"
-                name="horario"
+                name="horario_entrada"
+                type="time"
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <label>
+                Horario salida: 
+              </label>
+              <input
+                className="form-control"
+                name="horario_salida"
                 type="time"
                 onChange={this.handleChange}
               />
