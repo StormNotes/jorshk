@@ -1,7 +1,7 @@
 import React, {
   Component
 } from 'react';
-import axios from "axios";
+import axios, { Axios } from "axios";
 import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -36,7 +36,9 @@ class App extends React.Component {
   componentDidMount() {
     axios.get("http://localhost:3001/getEmpleados").then((response) => {
       console.log(response);
+      this.setState({ data:  response.data });
       this.state.data = response.data
+      console.log(this.state.data);
     })
   }
 
@@ -49,6 +51,21 @@ class App extends React.Component {
     }).then(()=>{
       console.log('se enviaron los datos a la BD')
     })
+  }
+
+  actualizarHorarios = (id) =>{
+    axios.put('http://localhost:3001/update',{
+      horario_entrada: this.state.form.horario_entrada,
+      id:id
+    }).then((response)=>{
+      console.log(response);
+      console.log('datos actualizados');
+    });
+  
+  }
+
+  eliminarRegistro = (id) =>{
+    axios.delete( `http://localhost:3001/delete/${id}`)
   }
 
   mostrarModalActualizar = (dato) => {
@@ -74,6 +91,7 @@ class App extends React.Component {
   };
 
   editar = (dato) => {
+    debugger
     var contador = 0;
     var arreglo = this.state.data;
     arreglo.map((registro) => {
@@ -85,6 +103,7 @@ class App extends React.Component {
       contador++;
     });
     this.setState({ data: arreglo, modalActualizar: false });
+    this.actualizarHorarios(dato.id);
   };
 
   eliminar = (dato) => {
@@ -99,6 +118,7 @@ class App extends React.Component {
         contador++;
       });
       this.setState({ data: arreglo, modalActualizar: false });
+      this.eliminarRegistro(dato.id)
     }
   };
 
@@ -126,7 +146,6 @@ class App extends React.Component {
   }
 
   handleChange = (e) => {
- 
     this.setState({
       form: {
         ...this.state.form,
@@ -159,7 +178,7 @@ class App extends React.Component {
               {this.state.data.map((dato) => (
                 <tr key={dato.id}>
                   <td>{dato.id}</td>
-                  <td>{dato.trabajador}</td>
+                  <td>{dato.name}</td>
                   <td>{dato.horario_entrada}</td>
                   <td>{dato.horario_salida}</td>
                   <td>
@@ -198,7 +217,7 @@ class App extends React.Component {
             </FormGroup>
             
             <FormGroup>
-              <label>
+              {/* <label>
                 trabajador: 
               </label>
               <input
@@ -208,7 +227,7 @@ class App extends React.Component {
                 onChange={this.handleChange}
                 value={this.state.form.trabajador}
                 required
-              />
+              /> */}
             </FormGroup>
             
             <FormGroup>
