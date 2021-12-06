@@ -32,10 +32,18 @@ app.post('/create',(req,res)=>{
 app.put("/update",(req,res)=>{
   const id = req.body.id;
   const horarioUpdated = req.body.horario_entrada
+  const horarioSalidaUpdate = req.body.horario_salida
   db.query("UPDATE registrosentradasalida SET horario_entrada = ? WHERE id = ?", [horarioUpdated, id], (err, result) => {
     if(err){
       console.log(err);
     }else{
+      res.send(result);
+    }
+  });
+  db.query("UPDATE registrosentradasalida SET horario_salida = ? WHERE id = ?", [horarioSalidaUpdate, id], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
       res.send(result);
     }
   });

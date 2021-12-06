@@ -57,6 +57,7 @@ class App extends React.Component {
   actualizarHorarios = (id) =>{
     axios.put('http://localhost:3001/update',{
       horario_entrada: this.state.form.horario_entrada,
+      horario_salida: this.state.form.horario_salida,
       id:id
     }).then((response)=>{
       console.log(response);
